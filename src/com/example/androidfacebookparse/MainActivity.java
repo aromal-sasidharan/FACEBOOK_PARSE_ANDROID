@@ -54,6 +54,24 @@ public class MainActivity extends Activity {
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		// TODO Auto-generated method stub
 
+		
+		
+		/* The normal workflow for FB login is 
+		 * 
+		 * login-btn-pressed -> FB-login-window -> onActivityResult -> Login-Success.
+		 * 
+		 *  
+		 *  the above flow some times causes crashes due to exception in the first login attempt in some devices say (SAMSUNG S DOUS 7562).
+		 *  
+		 *  and works flawlessly on the second attempt. 
+		 *  
+		 *  to solve the following code is enclosed in try catch.
+		 *  
+		 *  once the exception occurs we 		 *  
+		 *    
+		 *  try for a second login  and prevent looping using a boolean variable
+		 */
+		
 		Log.e("TESTPARSE", "REQUEST CODE " + requestCode);
 		try {
 			if (requestCode == requestCodeFB) {
@@ -67,6 +85,8 @@ public class MainActivity extends Activity {
 		} catch (Exception e) {
 			// TODO: handle exception
 
+			
+			//try for a second login  and prevent looping using a boolean variable
 			if (requestCode == requestCodeFB && isLogined) {
 				isLogined = false;
 				MainActivity.this.loginFB(null);
